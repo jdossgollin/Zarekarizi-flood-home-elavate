@@ -111,6 +111,27 @@ Requirements before running
 
 Run 
 
+## Running with Conda
+
+If you use conda, it may be easier to install required packages using anaconda
+
+```bash
+conda env create --file environment.yml
+conda activate elevate
+```
+
+There are a few packages that are not available on conda; you can optionally install them here (if you don't install them here they will be installed automatically late) with
+
+```bash
+Rscript Source_Code/_install.R
+```
+
+Then you're good to go!
+
+```bash
+Rscript Source_Code/main_script.R
+```
+
 # Contacts 
 Mahkameh Zarekarizi mxz414@psu.edu and mahkameh.zare@gmail.com
 

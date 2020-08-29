@@ -1,0 +1,20 @@
+name: elevate
+channels:
+    - r
+    - conda-forge
+    - defaults
+dependencies:
+    - r-base
+    - rstudio
+    - r-deoptim
+    - r-evd
+    - r-evdbayes
+    - r-evir
+    - r-extremes
+    - r-fields
+    - r-ismev
+    - r-kendall
+    - r-lhs
+    - r-plotrix
+    - r-pracma
+    - r-truncnorm
