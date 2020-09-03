@@ -1,5 +1,7 @@
 Figures/
 Output_Data/
+Source_Code/*.pdf
+*.DS_Store
 
 # History files
 .Rhistory

@@ -1,0 +1,70 @@
+---
+title: "Exploratory Figure Generation"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Does following our recommendation save money?
+
+First let's load in the data
+
+```{r}
+load("../Pre_Generated_Output_Data/House_case_objectives/Hypothetical_houses.RData")
+```
+
+The first question is how our recommendations differ from those of FEMA.
+We can plot a histogram of the difference:
+
+```{r}
+additional_heightening <- opt_height - fema_height
+hist(additional_heightening, freq = FALSE, ylab = "", yaxt="n", main = "Our Guidelines Change Recommendations", xlab = "Optimal Height Minus FEMA Guidelines (ft)")
+abline(v=0, lwd=3, lty=3, col="blue")
+```
+
+The next question is whether this leads to savings.
+We can plot a histogram of the savings, as a percentage of house value.
+
+```{r}
+savings <- fema_totcost - opt_totcost
+savings_pct <- savings / SOWs[, 2] # second col of SOW is value
+hist(savings_pct, freq = FALSE, ylab = "", yaxt="n", main = "Our Guidelines Save Money", xlab="Expected Savings From Optimal Strategy vs FEMA Guidelines (% of Home Value)")
+abline(v=0, lwd=3, lty=3, col="blue")
+```
+
+This suggests that most homeowners will save between 0 and 10 percent of the value of their home, but that some will save much more and a few will lose money.
+**Maggie's results differed, did I make a coding mistake?**
+
+Last we can compare results
+
+```{r}
+plot(
+  additional_heightening, savings_pct,
+  main = "One Dot Equals One House",
+  ylab = "Expected Savings (% of Home Value)",
+  xlab = "Optimal Height Minus FEMA Guidelines (ft)"
+)
+abline(v=0, lwd=3, lty=3, col="blue")
+abline(h=0, lwd=3, lty=3, col="blue")
+```
+
+This shows that sometimes FEMA recommends very large increases that don't make any sense.
+If we assume that common sense will save the homeowners who are told by FEMA that they should elevate 5 feet when this doesn't make sense, we can zoom in on the right portion of this graph:
+
+```{r}
+to_plot <- additional_heightening >= -4
+plot(
+  additional_heightening[to_plot], savings_pct[to_plot],
+  main = "One Dot Equals One House",
+  ylab = "Expected Savings (% of Home Value)",
+  xlab = "Optimal Height Minus FEMA Guidelines (ft)"
+)
+abline(v=0, lwd=3, lty=3, col="blue")
+abline(h=0, lwd=3, lty=3, col="blue")
+```
+
+This shows that sometimes FEMA suggests to raise the house by a few feet when it's not needed, and that homeowners can save a lot of money by electing to not elevate in these cases (left portion of graph) and that being proactive and elevating a few feet beyond FEMA guidelines can save homeowners up to about three percent of the value of their home.
